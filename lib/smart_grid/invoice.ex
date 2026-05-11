@@ -1,7 +1,7 @@
 defmodule SmartGridElixir.Invoice do
   @moduledoc """
   Struct imutável representando uma fatura de energia calculada.
-  
+
   Campos:
   - `total`: Valor total em reais (Decimal para precisão)
   - `bandeira`: Bandeira tarifária (verde, amarela, vermelha)
@@ -19,7 +19,7 @@ defmodule SmartGridElixir.Invoice do
   ]
 
   @type bandeira :: :verde | :amarela | :vermelha
-  
+
   @type t :: %__MODULE__{
     total: Decimal.t() | float(),
     bandeira: bandeira(),
@@ -47,11 +47,7 @@ defmodule SmartGridElixir.Invoice do
   """
   @spec format(t()) :: String.t()
   def format(invoice) do
-    total_str = 
-      invoice.total
-      |> Decimal.new()
-      |> Decimal.round(2)
-      |> Decimal.to_string()
+    total_str = Float.round(invoice.total, 2) |> to_string()
 
     """
     === FATURA DE ENERGIA ===

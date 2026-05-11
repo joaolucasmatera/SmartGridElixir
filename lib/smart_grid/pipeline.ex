@@ -1,7 +1,7 @@
 defmodule SmartGridElixir.Pipeline do
   @moduledoc """
   Orquestra o fluxo completo de transformação de leituras em faturas.
-  
+
   Implementa a pipeline imutável:
   1. Valida leituras (remove inválidas e outliers)
   2. Calcula valor de cada leitura aplicando tarifa e bandeira
@@ -14,7 +14,7 @@ defmodule SmartGridElixir.Pipeline do
 
   @doc """
   Processa uma lista de leituras e retorna uma fatura.
-  
+
   Usa o operador pipe |> para orquestrar as transformações:
   - Entrada: lista de Reading
   - Saída: Invoice
@@ -39,7 +39,7 @@ defmodule SmartGridElixir.Pipeline do
     Logger.info("Pipeline (detalhado) iniciado com #{length(leituras)} leituras")
 
     start_time = System.monotonic_time(:millisecond)
-    
+
     {leituras_validas, outliers} = Validator.remover_outliers(leituras)
     consumo_total = Enum.reduce(leituras_validas, 0.0, &(&1.kwh + &2))
 
@@ -51,7 +51,7 @@ defmodule SmartGridElixir.Pipeline do
       end)
 
     total = Enum.reduce(valores, 0.0, fn {_reading, valor}, acc -> valor + acc end)
-    
+
     end_time = System.monotonic_time(:millisecond)
     tempo_ms = end_time - start_time
 

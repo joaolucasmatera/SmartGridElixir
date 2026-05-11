@@ -1,0 +1,29 @@
+# Abra uma sessão IEx e cole estes comandos:
+
+# 1. Criar leituras
+leituras = [
+  %SmartGridElixir.Reading{consumer_id: "C001", kwh: 100, profile: :residencial, timestamp: DateTime.utc_now()},
+  %SmartGridElixir.Reading{consumer_id: "C001", kwh: 105, profile: :residencial, timestamp: DateTime.utc_now()},
+  %SmartGridElixir.Reading{consumer_id: "C001", kwh: 102, profile: :residencial, timestamp: DateTime.utc_now()}
+]
+
+# 2. Testar bandeira verde
+IO.puts("\n=== BANDEIRA VERDE ===\n")
+fatura = SmartGridElixir.Pipeline.process(leituras, :verde)
+IO.puts(SmartGridElixir.Invoice.format(fatura))
+
+# 3. Testar bandeira amarela
+IO.puts("\n=== BANDEIRA AMARELA ===\n")
+fatura = SmartGridElixir.Pipeline.process(leituras, :amarela)
+IO.puts(SmartGridElixir.Invoice.format(fatura))
+
+# 4. Testar com outliers
+IO.puts("\n=== COM OUTLIERS ===\n")
+leituras_outliers = leituras ++ [%SmartGridElixir.Reading{consumer_id: "C001", kwh: 999, profile: :residencial, timestamp: DateTime.utc_now()}]
+fatura = SmartGridElixir.Pipeline.process(leituras_outliers, :verde)
+IO.puts(SmartGridElixir.Invoice.format(fatura))
+
+# 5. Análise estatística
+IO.puts("\n=== ANÁLISE ESTATÍSTICA ===\n")
+stats = SmartGridElixir.Pipeline.analisar(leituras)
+IO.inspect(stats, pretty: true)
