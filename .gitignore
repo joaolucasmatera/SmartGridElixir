@@ -1,0 +1,23 @@
+# Elixir
+/_build/
+/deps/
+*.beam
+*.plt
+erl_crash.dump
+.elixir_ls/
+.dialyzer_plt
+.dialyzer_plt.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Mix
+mix.lock
+
+# OS
+Thumbs.db
