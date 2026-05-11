@@ -1,7 +1,7 @@
 defmodule SmartGridElixir.Validator do
   @moduledoc """
   Valida leituras e remove outliers usando análise estatística.
-  
+
   Implementa detecção de outliers via desvio padrão (Z-score).
   Qualquer leitura com Z-score > 3 é considerada outlier.
   """
@@ -10,12 +10,12 @@ defmodule SmartGridElixir.Validator do
 
   @doc """
   Remove leituras inválidas (kwh <= 0) e outliers estatísticos.
-  
+
   Retorna uma tupla {leituras_válidas, quantidade_removidas}
   """
-  @spec remover_outliers([SmartGrid.Reading.t()]) :: {[SmartGrid.Reading.t()], non_neg_integer()}
+  @spec remover_outliers([SmartGridElixir.Reading.t()]) :: {[SmartGridElixir.Reading.t()], non_neg_integer()}
   def remover_outliers([]), do: {[], 0}
-  
+
   def remover_outliers(leituras) when is_list(leituras) do
     # Filtro 1: Remove inválidas (kwh <= 0)
     validas = Enum.filter(leituras, & &1.kwh > 0)
@@ -50,7 +50,7 @@ defmodule SmartGridElixir.Validator do
   @doc """
   Calcula a média aritmética de kWh em uma lista de leituras.
   """
-  @spec calcular_media([SmartGrid.Reading.t()]) :: float()
+  @spec calcular_media([SmartGridElixir.Reading.t()]) :: float()
   def calcular_media(leituras) do
     total = Enum.reduce(leituras, 0.0, &(&1.kwh + &2))
     total / length(leituras)
@@ -59,7 +59,7 @@ defmodule SmartGridElixir.Validator do
   @doc """
   Calcula o desvio padrão de kWh em uma lista de leituras.
   """
-  @spec calcular_desvio_padrao([SmartGrid.Reading.t()], float()) :: float()
+  @spec calcular_desvio_padrao([SmartGridElixir.Reading.t()], float()) :: float()
   def calcular_desvio_padrao(leituras, media \\ nil) do
     media = media || calcular_media(leituras)
 
@@ -88,7 +88,7 @@ defmodule SmartGridElixir.Validator do
   @doc """
   Valida se uma leitura individual é válida (kwh > 0).
   """
-  @spec valida?(SmartGrid.Reading.t()) :: boolean()
+  @spec valida?(SmartGridElixir.Reading.t()) :: boolean()
   def valida?(reading) do
     reading.kwh > 0 && reading.valid
   end

@@ -1,12 +1,12 @@
 defmodule SmartGridElixir.Tarifa do
   @moduledoc """
   Implementa as regras tarifárias complexas usando pattern matching.
-  
+
   Bandeiras:
   - Verde: multiplicador 1.00
   - Amarela: multiplicador 1.021
   - Vermelha: multiplicador 1.040
-  
+
   Perfis:
   - Residencial: R$ 0.72 / kWh (base)
   - Comercial: R$ 0.85 / kWh (base)
@@ -29,11 +29,11 @@ defmodule SmartGridElixir.Tarifa do
 
   @doc """
   Calcula o valor de uma leitura baseado em bandeira e perfil.
-  
+
   Retorna um float com o valor em reais.
   """
-  @spec calcular(SmartGrid.Reading.t(), SmartGrid.Invoice.bandeira()) :: float()
-  def calcular(%SmartGrid.Reading{} = reading, bandeira) when bandeira in [:verde, :amarela, :vermelha] do
+  @spec calcular(SmartGridElixir.Reading.t(), SmartGridElixir.Invoice.bandeira()) :: float()
+  def calcular(%SmartGridElixir.Reading{} = reading, bandeira) when bandeira in [:verde, :amarela, :vermelha] do
     reading.kwh
     |> multiplicar_por_tarifa_base(reading.profile)
     |> aplicar_bandeira(bandeira)
@@ -43,7 +43,7 @@ defmodule SmartGridElixir.Tarifa do
   @doc """
   Retorna o multiplicador para uma bandeira.
   """
-  @spec multiplicador(SmartGrid.Invoice.bandeira()) :: float()
+  @spec multiplicador(SmartGridElixir.Invoice.bandeira()) :: float()
   def multiplicador(bandeira) do
     Map.get(@bandeira_multiplicadores, bandeira, 1.0)
   end
@@ -51,7 +51,7 @@ defmodule SmartGridElixir.Tarifa do
   @doc """
   Retorna a tarifa base para um perfil.
   """
-  @spec tarifa_base(SmartGrid.Reading.profile()) :: float()
+  @spec tarifa_base(SmartGridElixir.Reading.profile()) :: float()
   def tarifa_base(profile) do
     Map.get(@tarifa_base, profile, 0.72)
   end

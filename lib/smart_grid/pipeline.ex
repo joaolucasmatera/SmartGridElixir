@@ -7,11 +7,6 @@ defmodule SmartGridElixir.Pipeline do
   2. Calcula valor de cada leitura aplicando tarifa e bandeira
   3. Agrega o total
   4. Gera invoice com metadados
-  
-  Exemplo:
-      iex> leituras = [...]
-      iex> SmartGridElixir.Pipeline.process(leituras, :amarela)
-      %SmartGridElixir.Invoice{...}
   """
 
   require Logger
@@ -46,7 +41,7 @@ defmodule SmartGridElixir.Pipeline do
     start_time = System.monotonic_time(:millisecond)
     
     {leituras_validas, outliers} = Validator.remover_outliers(leituras)
-    consumo_total = Enum.sum(leituras_validas, &(&1.kwh + 0.0))
+    consumo_total = Enum.reduce(leituras_validas, 0.0, &(&1.kwh + &2))
 
     valores =
       leituras_validas
@@ -55,7 +50,7 @@ defmodule SmartGridElixir.Pipeline do
         {reading, valor}
       end)
 
-    total = Enum.sum(valores, &elem(&1, 1))
+    total = Enum.reduce(valores, 0.0, fn {_reading, valor}, acc -> valor + acc end)
     
     end_time = System.monotonic_time(:millisecond)
     tempo_ms = end_time - start_time
@@ -95,7 +90,7 @@ defmodule SmartGridElixir.Pipeline do
   def analisar(leituras) when is_list(leituras) do
     {leituras_validas, outliers} = Validator.remover_outliers(leituras)
 
-    consumo_total = Enum.sum(leituras_validas, &(&1.kwh + 0.0))
+    consumo_total = Enum.reduce(leituras_validas, 0.0, &(&1.kwh + &2))
     media = Validator.calcular_media(leituras_validas)
     desvio = Validator.calcular_desvio_padrao(leituras_validas, media)
 
@@ -116,7 +111,7 @@ defmodule SmartGridElixir.Pipeline do
   # Funções privadas
 
   defp criar_invoice(total, bandeira, leituras_validas, outliers) do
-    consumo = Enum.sum(leituras_validas, &(&1.kwh + 0.0))
+    consumo = Enum.reduce(leituras_validas, 0.0, &(&1.kwh + &2))
 
     Invoice.new(total, bandeira,
       consumo_kwh: consumo,

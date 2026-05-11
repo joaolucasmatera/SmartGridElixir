@@ -19,9 +19,6 @@ defmodule SmartGridElixir.MixProject do
 
   defp deps do
     [
-      # Testing
-      {:ex_unit, "~> 1.14", only: :test},
-
       # Data validation and utilities
       {:decimal, "~> 2.1"},
 
