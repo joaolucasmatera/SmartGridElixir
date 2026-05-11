@@ -1,4 +1,4 @@
-defmodule SmartGrid.Invoice do
+defmodule SmartGridElixir.Invoice do
   @moduledoc """
   Struct imutável representando uma fatura de energia calculada.
   

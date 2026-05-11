@@ -1,7 +1,7 @@
-defmodule SmartGrid.PipelineTest do
+defmodule SmartGridElixir.PipelineTest do
   use ExUnit.Case
 
-  alias SmartGrid.{Reading, Invoice, Pipeline}
+  alias SmartGridElixir.{Reading, Invoice, Pipeline}
 
   doctest Pipeline
 

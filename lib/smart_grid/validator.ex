@@ -1,4 +1,4 @@
-defmodule SmartGrid.Validator do
+defmodule SmartGridElixir.Validator do
   @moduledoc """
   Valida leituras e remove outliers usando análise estatística.
   

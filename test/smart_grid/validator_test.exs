@@ -1,7 +1,7 @@
-defmodule SmartGrid.ValidatorTest do
+defmodule SmartGridElixir.ValidatorTest do
   use ExUnit.Case
   
-  alias SmartGrid.{Reading, Validator}
+  alias SmartGridElixir.{Reading, Validator}
 
   doctest Validator
 

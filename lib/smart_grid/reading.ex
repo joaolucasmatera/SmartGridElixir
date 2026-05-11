@@ -1,4 +1,4 @@
-defmodule SmartGrid.Reading do
+defmodule SmartGridElixir.Reading do
   @moduledoc """
   Struct imutável representando uma leitura de medidor de energia.
   

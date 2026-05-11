@@ -1,4 +1,4 @@
-defmodule SmartGrid.Tarifa do
+defmodule SmartGridElixir.Tarifa do
   @moduledoc """
   Implementa as regras tarifárias complexas usando pattern matching.
   

@@ -1,7 +1,7 @@
-defmodule SmartGrid.TarifaTest do
+defmodule SmartGridElixir.TarifaTest do
   use ExUnit.Case
 
-  alias SmartGrid.{Reading, Tarifa}
+  alias SmartGridElixir.{Reading, Tarifa}
 
   doctest Tarifa
 

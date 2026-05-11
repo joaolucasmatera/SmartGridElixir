@@ -1,4 +1,4 @@
-defmodule SmartGrid.Pipeline do
+defmodule SmartGridElixir.Pipeline do
   @moduledoc """
   Orquestra o fluxo completo de transformação de leituras em faturas.
   
@@ -10,12 +10,12 @@ defmodule SmartGrid.Pipeline do
   
   Exemplo:
       iex> leituras = [...]
-      iex> SmartGrid.Pipeline.process(leituras, :amarela)
-      %SmartGrid.Invoice{...}
+      iex> SmartGridElixir.Pipeline.process(leituras, :amarela)
+      %SmartGridElixir.Invoice{...}
   """
 
   require Logger
-  alias SmartGrid.{Reading, Invoice, Validator, Tarifa}
+  alias SmartGridElixir.{Reading, Invoice, Validator, Tarifa}
 
   @doc """
   Processa uma lista de leituras e retorna uma fatura.
