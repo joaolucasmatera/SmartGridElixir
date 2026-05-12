@@ -13,17 +13,20 @@ defmodule SmartGridElixir.MixProject do
 
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {SmartGridElixir.Application, []}
     ]
   end
 
   defp deps do
     [
+      # Web framework
+      {:phoenix, "~> 1.7"},
+      {:plug_cowboy, "~> 2.6"},
+      {:jason, "~> 1.4"},
+
       # Data validation and utilities
       {:decimal, "~> 2.1"},
-
-      # Optional: for future web integration
-      {:plug_cowboy, "~> 2.6", optional: true},
 
       # Development/debugging
       {:ex_doc, "~> 0.30", only: :dev, runtime: false},
